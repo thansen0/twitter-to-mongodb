@@ -21,3 +21,11 @@ $ python3 tweet_dump.py
 ```
 
 And this should populate the database with the most recent 3200 tweets from whatever date you specified for each username in username.txt
+
+As a helpful reminder you may run 
+
+```
+git update-index --assume-unchanged config.ini
+```
+
+So that you won't accidentally push your secret tokens.
