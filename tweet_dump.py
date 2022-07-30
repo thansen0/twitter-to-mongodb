@@ -8,12 +8,16 @@ from pymongo import MongoClient
 import tweepy
 import json
 import time
+import configparser
 
 # Twitter API credentials
-CONSUMER_KEY = ''
-CONSUMER_SECRET = ''
-ACCESS_TOKEN = ''
-ACCESS_TOKEN_SECRET = ''
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+CONSUMER_KEY = config["DEFAULT"]["CONSUMER_KEY"].strip("'\"")
+CONSUMER_SECRET = config["DEFAULT"]["CONSUMER_SECRET"].strip("'\"")
+ACCESS_TOKEN = config["DEFAULT"]["ACCESS_TOKEN"].strip("'\"")
+ACCESS_TOKEN_SECRET = config["DEFAULT"]["ACCESS_TOKEN_SECRET"].strip("'\"")
 
 # Hardcoded variables
 OLDEST_POSTS = 2014
