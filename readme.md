@@ -1,6 +1,6 @@
 # Multithreaded tweet dump into MongoDB
 
-This is a short script that will download the most recent 3200 tweets from a user (the max the twitter api allows) and inserts it into a mongodb database. 
+This is a short script that will download the most recent 3200 tweets from a user (the max the twitter api allows) and inserts it into a mongodb database using the [cursor API](https://docs.tweepy.org/en/latest/v1_pagination.html#tweepy.Cursor). 
 
 ## Setup
 
@@ -26,6 +26,7 @@ As a helpful reminder you may run
 
 ```
 git update-index --assume-unchanged config.ini
+git update-index --assume-unchanged usernames.txt
 ```
 
-So that you won't accidentally push your secret tokens.
+So that you won't accidentally push your secret tokens and username list.

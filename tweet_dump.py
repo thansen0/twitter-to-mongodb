@@ -27,15 +27,13 @@ class TwitterHarvester(object):
     # Create a new TwitterHarvester instance
     def __init__(self, consumer_key, consumer_secret,
                  access_token, access_token_secret,
-                 wait_on_rate_limit=False,
-                 wait_on_rate_limit_notify=False):
+                 wait_on_rate_limit=False):
 
         self.auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
         self.auth.secure = True
         self.auth.set_access_token(access_token, access_token_secret)
         self.__api = tweepy.API(self.auth,
-                                wait_on_rate_limit=wait_on_rate_limit,
-                                wait_on_rate_limit_notify=wait_on_rate_limit_notify)
+                                wait_on_rate_limit=wait_on_rate_limit)
     
     @property
     def api(self):
@@ -50,7 +48,7 @@ def twitter_logic(conn, company, a):
 
     # use the cursor to skip the handling of the pagination mechanism 
     # http://docs.tweepy.org/en/latest/cursor_tutorial.html
-    tweets = tweepy.Cursor(api.user_timeline, screen_name=company).items()
+    tweets = tweepy.Cursor(api.user_timeline, screen_name=company, tweet_mode='extended').items()
 
     c = 0
     tt = time.time()
@@ -82,9 +80,8 @@ if __name__ == "__main__":
 
     conn = MongoClient("localhost", 27017)
     th = TwitterHarvester(CONSUMER_KEY, CONSUMER_SECRET,
-                         ACCESS_TOKEN, ACCESS_TOKEN_SECRET,
-                         wait_on_rate_limit=True,
-                         wait_on_rate_limit_notify=True)
+                            ACCESS_TOKEN, ACCESS_TOKEN_SECRET,
+                            wait_on_rate_limit=True)
 
 
     executor = ThreadPoolExecutor(max_workers = WINDOW)
