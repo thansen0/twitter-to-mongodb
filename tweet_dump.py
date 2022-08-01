@@ -51,6 +51,7 @@ def twitter_logic(conn, company, a):
     tweets = tweepy.Cursor(api.user_timeline, screen_name=company, tweet_mode='extended').items()
 
     c = 0
+    dup = 0
     tt = time.time()
     print("Starting {} processing".format(company))
     while True:
@@ -65,12 +66,17 @@ def twitter_logic(conn, company, a):
         # convert from Python dict-like structure to JSON format
         jsoned_data = json.dumps(data._json)
         tweet = json.loads(jsoned_data)
-        # insert the information in the database
-        collection.insert_one(tweet)
+
+        # insert the information in the database if it doesn't already exist
+        if not collection.find_one({"id":tweet['id']}):
+            collection.insert_one(tweet)
+        # The more astute of you will notice "aren't we hitting the database a lot?", and we are
+        # I don't think it's a problem since we're rate limited anyways, but if performance is a               # concern (or you're paying for twitter blue) I would add these in batches
+
         c += 1
 
         if c % 1000 == 0:
-            print("Processed {} {} tweets with average {} tweets/ms".format(c, company, 1000*c / tt))
+            print("Processed {} {} tweets with average {} tweets/ms and {} duplicates".format(c, company, 1000*c / tt, dup))
 
     print("Finished {} after {} seconds and {} iterations".format(company, time.time() - tt, c))
 
