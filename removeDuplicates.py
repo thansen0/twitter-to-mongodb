@@ -21,7 +21,7 @@ if __name__ == "__main__":
         num_tweets = len(list(db.tweets.find({"id":tweet_id})))
         if num_tweets > 1:
             # remove tweet
-            print("Duplicate with ID: " + str(tweet_id))
+            print(tweet['user']['name'] + " duplicate " + str(num_tweets) + " with ID: " + str(tweet_id))
 
             collection.delete_one({'id':tweet_id})
 
