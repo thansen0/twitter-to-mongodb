@@ -71,7 +71,10 @@ def twitter_logic(conn, company, a):
         if not collection.find_one({"id":tweet['id']}):
             collection.insert_one(tweet)
         else:
-           print("Duplicate Found " + str(tweet['id']))
+            print("Duplicate Found " + str(tweet['id']))
+            # assume if you've found a duplicate it's because you've already entered all 
+            # older data
+            break
         # The more astute of you will notice "aren't we hitting the database a lot?", and we are
         # I don't think it's a problem since we're rate limited anyways, but if performance is a               # concern (or you're paying for twitter blue) I would add these in batches
 
