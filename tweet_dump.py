@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # encoding: utf-8
 
-# script to download up to <= 3200 (the official API limit) of most recent tweets from a user's timeline 
+# script to download up to <= 3200 (the official API limit) of most recent tweets from a user's timeline
+# last tested with tweepy 4.12.1
+
 from concurrent.futures import ThreadPoolExecutor
 from pymongo import MongoClient
 
